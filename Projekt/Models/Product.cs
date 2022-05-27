@@ -16,10 +16,8 @@ namespace Projekt.Models
         [Required]
         [Column(TypeName = "decimal(9,2)")]
         public decimal Price { get; set; }
-        // Strani ključ kao oznaka za referencijalni integritet prema svojstvu iz klase OrderItem
         [ForeignKey("ProductId")]
         public List<OrderItem> OrderItems { get; set; }
-        // Strani ključ kao oznaka za referencijalni integritet prema svojstvu iz klase ProductCategory
         [ForeignKey("ProductId")]
         public List<ProductCategory> ProductCategories { get; set; }
     }

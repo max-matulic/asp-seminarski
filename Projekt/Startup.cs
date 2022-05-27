@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Projekt.Data;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,6 +57,25 @@ namespace Projekt
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
+            var defaultCulture = "hr-Hr";
+            var ci = new CultureInfo(defaultCulture);
+            ci.NumberFormat.NumberDecimalSeparator = ".";
+            ci.NumberFormat.CurrencyDecimalSeparator = ".";
+
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+            {
+                DefaultRequestCulture = new RequestCulture(ci),
+                SupportedCultures = new List<CultureInfo>()
+                {
+                    ci
+                },
+                SupportedUICultures = new List<CultureInfo>()
+                {
+                    ci
+                }
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -64,7 +85,8 @@ namespace Projekt
             {
                 endpoints.MapControllerRoute(
                     name: "Admin",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
 
                 endpoints.MapControllerRoute(
                     name: "default",
