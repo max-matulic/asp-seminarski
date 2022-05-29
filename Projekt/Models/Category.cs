@@ -10,7 +10,6 @@ namespace Projekt.Models
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
-        //dodao ForeignKey annotation nakon migracije. Problem?????
         [ForeignKey("CategoryId")]
         public List<ProductCategory> ProductCategories { get; set; }
     }

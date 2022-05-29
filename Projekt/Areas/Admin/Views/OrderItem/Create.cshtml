@@ -1,0 +1,11 @@
+﻿@model OrderItem
+
+<select asp-for="ProductId" asp-items="@ViewBag.Products"></select>
+
+<select name="ProductId">
+    @foreach (var item in (List<Product>)ViewBag.ProductsEntity)
+    {
+        <option value="@item.Id">@item.Title</option>
+    }
+</select>
+
