@@ -1,0 +1,21 @@
+﻿@model ProductCategory
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h2>Are you sure you want to delete this product category?</h2>
+<p>
+    @Model.ProductTitle
+</p>
+<p>
+    @Model.CategoryTitle
+</p>
+
+<form asp-action="DeleteProductCategory">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+</form>
+<a asp-action="Index" asp-route-productId="@Model.ProductId">Back to Index</a>
+
