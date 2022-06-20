@@ -13,6 +13,8 @@ namespace Projekt.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
+
+        #region Order
         public OrderController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -35,6 +37,21 @@ namespace Projekt.Areas.Admin.Controllers
             {
                 return RedirectToAction("PageNotFound", "HttpStatusCodes");
             }
+
+            order.OrderItems =
+                (
+                    from oi in _dbContext.OrderItem
+                    where oi.OrderId == id
+                    select new OrderItem
+                    {
+                        Id = oi.Id,
+                        OrderId = oi.OrderId,
+                        Quantity = oi.Quantity,
+                        Total = oi.Total,
+                        ProductId = oi.ProductId,
+                        ProductName = (from pr in _dbContext.Product where pr.Id == oi.ProductId select pr.Title).FirstOrDefault()
+                    }
+                ).ToList();
 
             return View(order);
         }
@@ -138,7 +155,46 @@ namespace Projekt.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+        #endregion
+
+        #region Order Items
+
+        public IActionResult AddOrderItem(int id)
+        {
+            ViewBag.OrderId = id;
+            ViewBag.Products = _dbContext.Product.Select(p => new SelectListItem()
+            {
+                Value = p.Id.ToString(),
+                Text = p.Title
+            }).ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddOrderItem([Bind("OrderId, ProductId, Total, Quantity")] OrderItem orderItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _dbContext.OrderItem.Add(orderItem);
+                _dbContext.SaveChanges();
+
+                return RedirectToAction("Details", new { id = orderItem.OrderId });
+            }
+
+            return View(orderItem);
+        }
+
+        public IActionResult DeleteOrderItem(int id)
+        {
+            var orderItem = _dbContext.OrderItem.Find(id);
+            _dbContext.OrderItem.Remove(orderItem);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("Details", new { id = orderItem.OrderId });
+        }
+
+        #endregion
 
         private List<SelectListItem> GetUsers()
         {

@@ -14,5 +14,8 @@ namespace Projekt.Models
         [Column(TypeName = "decimal(9,2")]
         [Required(ErrorMessage = "Total is required!")]
         public decimal Total { get; set; }
+
+        [NotMapped]
+        public string ProductName { get; set; }
     }
 }
