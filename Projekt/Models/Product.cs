@@ -11,6 +11,9 @@ namespace Projekt.Models
         [StringLength(200, MinimumLength = 2)]
         public string Title { get; set; }
         [Required]
+        [StringLength(800)]
+        public string Description { get; set; }
+        [Required]
         [Column(TypeName = "decimal(9,2)")]
         public decimal Quantity { get; set; }
         [Required]

@@ -56,5 +56,44 @@ namespace Projekt.Areas.Admin.Controllers
 
             return View(product);
         }
+
+        //public IActionResult Edit(int id)
+        //{
+        //    var product = _dbContext.Product.Find(id);
+
+        //    return View(product);
+        //}
+
+        //[HttpPost]
+        //public IActionResult Edit(int id, Product product)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _dbContext.Update(product);
+        //        _dbContext.SaveChanges();
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    return View(product);
+        //}
+
+        public IActionResult Delete(int id)
+        {
+            var product = _dbContext.Product.FirstOrDefault(p => p.Id == id);
+
+            return View(product);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = _dbContext.Product.Find(id);
+            _dbContext.Product.Remove(product);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
