@@ -1,0 +1,61 @@
+﻿@using Projekt.Extensions
+@model List<CartItem>
+@{
+    ViewData["Title"] = "CartPage";
+}
+
+@if (Model.Count == 0)
+{
+    <div class="text-center">
+        <h1>Your cart is empty!</h1>
+        <hr />
+        <a asp-controller="Home" asp-action="Product">Continue shopping</a>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1>Cart items</h1>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-sm btn-danger" asp-action="RemoveFromCart" asp-route-productId="@item.Product.Id">Remove</a>
+                    </td>
+                    <td>@item.Product.Title</td>
+                    <td>@item.Product.Price Kn</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.GetTotal() Kn</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <b>Total price: @ViewBag.TotalPrice Kn</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Product">Continue shopping</a>
+    <a class="btn btn-success" asp-controller="Home" asp-action="Order">Order products</a>
+
+}
+
