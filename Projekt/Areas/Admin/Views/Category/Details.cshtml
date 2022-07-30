@@ -3,14 +3,12 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<h4>Category</h4>
+<h1>Category details</h1>
 
 <partial name="_CategoryDetails" model="Model" />
 
 <div>
-    <a asp-action="Index">Back</a>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit category</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
 </div>
 

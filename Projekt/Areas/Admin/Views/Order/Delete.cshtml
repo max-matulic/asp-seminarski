@@ -3,18 +3,22 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete order</h1>
+<h1 class="text-center m-3">Delete order</h1>
+
+<hr />
 
 <h4>Are you sure you want to delete order @Model.Id ?</h4>
 
-<div class="row">
-    <div class="col-sm-2">
+<div class="row mt-3">
+    <div class="col-sm-2 font-weight-bold">
         @Html.DisplayNameFor(model => model.DateCreated)
     </div>
     <div class="col-sm-2">
         @Html.DisplayFor(model => model.DateCreated)
     </div>
-    <div class="col-sm-2">
+</div>
+<div class="row mt-3">
+    <div class="col-sm-2 font-weight-bold">
         @Html.DisplayNameFor(model => model.Total)
     </div>
     <div class="col-sm-2">
@@ -22,9 +26,9 @@
     </div>
 </div>
 
-<form asp-action="DeleteOrder">
+<form asp-action="DeleteOrder" class="mt-3">
     <input asp-for="Id" type="hidden" />
-    <input type="submit" value="Delete" class="btn btn-danger" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
 </form>
-<a asp-action="Index">Back to index</a>
 

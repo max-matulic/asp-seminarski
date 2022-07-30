@@ -3,27 +3,28 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ProductId" />
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
-            </div>
-        </form>
+<h1 class="text-center m-3">Edit category for product</h1>
+
+<hr />
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ProductId" />
+    <div class="form-group row">
+        <label asp-for="CategoryId" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories"></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index" asp-route-productId="@ViewBag.ProductId">Back to Index</a>
-</div>
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" asp-route-productId="@Model.ProductId" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+</form>
 
 @section Scripts{
     @{

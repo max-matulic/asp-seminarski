@@ -1,11 +1,12 @@
 ﻿@model Category
 
-<div class="row">
-    <div class="col-md-4">
-        @Html.DisplayNameFor(m => m.Title)
-    </div>
-    <div class="col-md-4">
-        @Html.DisplayFor(m => m.Title)
+
+    <div class="row">
+        <div class="col col-md-2 mt-4 mb-4 font-weight-bold">
+            @Html.DisplayNameFor(m => m.Title)
+        </div>
+        <div class="col col-md-2 mt-4 mb-4">
+            @Html.DisplayFor(m => m.Title)
+        </div>
     </div>
 
-</div>
