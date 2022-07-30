@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Projekt.Data;
+using Projekt.Extensions;
 using Projekt.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Projekt.Controllers
@@ -15,6 +17,7 @@ namespace Projekt.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbContext;
+        const string _sessionKey = "_cart";
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
         {
@@ -22,8 +25,9 @@ namespace Projekt.Controllers
             _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? message)
         {
+            ViewBag.Message = message;  
             return View();
         }
 
@@ -64,6 +68,75 @@ namespace Projekt.Controllers
                 );
 
             return View(products);
+        }
+
+        public IActionResult Order(List<string> errors)
+        {
+            List<CartItem> cartItems = HttpContext.Session.GetObjectsFromJson<List<CartItem>>(_sessionKey) ?? new List<CartItem>();
+
+            if (cartItems.Count == 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            decimal sum = 0;
+            ViewBag.TotalPrice = cartItems.Sum(item => sum + item.GetTotal());
+            ViewBag.Errors = errors;
+
+            return View(cartItems);
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrder(Order order)
+        {
+            List<CartItem> cartItems = HttpContext.Session.GetObjectsFromJson<List<CartItem>>(_sessionKey) ?? new List<CartItem>();
+
+            if (cartItems.Count == 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            List<string> modelErrors = new List<string>();
+            if (ModelState.IsValid)
+            {
+                order.DateCreated = DateTime.Now;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value.ToString();
+                order.UserId = userId;
+
+                _dbContext.Order.Add(order);
+                _dbContext.SaveChanges();
+
+                int orderId = order.Id;
+
+                foreach (var cartItem in cartItems)
+                {
+                    OrderItem orderItem = new OrderItem()
+                    {
+                        OrderId = orderId,
+                        ProductId = cartItem.Product.Id,
+                        Quantity = cartItem.Quantity,
+                        Total = cartItem.GetTotal()
+                    };
+
+                    _dbContext.OrderItem.Add(orderItem);
+                    _dbContext.SaveChanges();
+                }
+
+                HttpContext.Session.SetObjectAsJson(_sessionKey, "");
+                return RedirectToAction(nameof(Index), new { message = "Thank you for the orders!" });
+            }
+            else
+            {
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var modelError in modelState.Errors)
+                    {
+                        modelErrors.Add(modelError.ErrorMessage);
+                    }
+                }
+            }
+
+            return RedirectToAction(nameof(Order), new { errors = modelErrors });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
