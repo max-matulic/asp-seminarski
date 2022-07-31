@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center m-3">All users</h1>
+
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-success">Create new user</a>
+</p>
+
+<div class="row justify-content-center">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning">Edit</a>
+                            <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-info">Details</a>
+                        </td>
+                        <td>
+                            @if (user.UserName.Contains("admin"))
+                            {
+                                <form asp-action="Delete" asp-route-id="@user.Id" method="post" class="form-inline">
+                                    <button type="submit" class="btn btn-danger" disabled>Delete</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Delete" asp-route-id="@user.Id" method="post" class="form-inline">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <p>
+        <a asp-action="Index" asp-controller="RoleManager" class="btn btn-primary">Go to role managment</a>
+    </p>
+</div>
+

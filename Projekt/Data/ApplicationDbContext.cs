@@ -20,6 +20,8 @@ namespace Projekt.Data
         public string Address { get; set; }
         [ForeignKey("UserId")]
         public List<Order> Orders { get; set; }
+
+        public byte[] Avatar { get; set; }
     }
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
