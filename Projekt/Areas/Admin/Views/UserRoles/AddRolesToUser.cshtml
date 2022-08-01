@@ -1,7 +1,38 @@
-﻿
+﻿@model List<AddRemoveUserRolesViewModel>
 @{
     ViewData["Title"] = "AddRolesToUser";
 }
 
-<h1>AddRolesToUser</h1>
+<h1 class="text-center m-3">Add roles to user</h1>
+
+<hr />
+
+<form method="post">
+    <input type="hidden" name="userId" value="@ViewBag.UserId" />
+    <div class="card">
+        <div class="card-header">
+            <h2>Add/Remove roles for user @ViewBag.UserName</h2>
+        </div>
+        <div class="card-body">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].RoleId" />
+                    <input type="hidden" asp-for="@Model[i].RoleName" />
+                    <input asp-for="@Model[i].Selected" class="form-check-input" />
+                    <label class="form-check-label" asp-for="@Model[i].Selected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            }
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+</form>
+
 
