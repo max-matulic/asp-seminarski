@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Projekt.Data;
 using Projekt.Models;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace Projekt.Areas.Admin.Controllers
@@ -11,10 +14,12 @@ namespace Projekt.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ApplicationDbContext dbContext)
+        public ProductController(ApplicationDbContext dbContext, IWebHostEnvironment webHostEnvironment)
         {
             _dbContext = dbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -48,6 +53,20 @@ namespace Projekt.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(product.ProductImage != null)
+                {
+                    string path = "products/images/";
+                    path += Guid.NewGuid().ToString() + "_" + product.ProductImage.FileName;
+
+                    product.ProductImagePath = "/" + path;
+
+
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, path);
+
+                    product.ProductImage.CopyTo(new FileStream(serverFolder, FileMode.Create));
+
+                }
+
                 _dbContext.Product.Add(product);
                 _dbContext.SaveChanges();
 

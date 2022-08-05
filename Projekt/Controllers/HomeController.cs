@@ -70,6 +70,12 @@ namespace Projekt.Controllers
             return View(products);
         }
 
+        public IActionResult ProductDetail(int id)
+        {
+            var product = _dbContext.Product.FirstOrDefault(p => p.Id == id);
+            return View(product);
+        }
+
         public IActionResult Order(List<string> errors)
         {
             List<CartItem> cartItems = HttpContext.Session.GetObjectsFromJson<List<CartItem>>(_sessionKey) ?? new List<CartItem>();

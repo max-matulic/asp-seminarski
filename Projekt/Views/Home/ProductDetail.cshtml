@@ -1,0 +1,44 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "ProductDetail";
+}
+
+<h1 class="text-center m-3">ProductDetail</h1>
+
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.ProductImagePath" class="img-fluid img-thumbnail" alt="Responsive image">
+        </div>
+        <div class="col-md-6">
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <h2>@Model.Title</h2>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <p class="description">
+                        @Model.Description
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                        <input type="hidden" name="productId" value="@Model.Id" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <input type="submit" class="btn btn-success" value="Add to cart" />
+                    </form>
+
+                </div>
+                <div class="col-md-4">
+                    <a asp-action="Product" class="btn btn-primary">Back to products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

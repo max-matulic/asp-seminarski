@@ -30,7 +30,8 @@
         <div class="col-sm-4 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
+                    <img src="@item.ProductImagePath" class="img-thumbnail" />
+                    <h5 class="card-title mt-3">@item.Title</h5>
                     <p class="card-text">@item.Description</p>
 
                     <table class="table table-condensed table-hover">
@@ -50,6 +51,9 @@
                                         <input type="submit" class="btn btn-success btn-sm" value="Add to cart" />
                                     </form>
 
+                                </td>
+                                <td>
+                                    <a asp-route-id="@item.Id" asp-controller="Home" asp-action="ProductDetail" class="btn btn-primary btn-sm">Details</a>
                                 </td>
                             </tr>
                         </tbody>

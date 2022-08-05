@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +20,11 @@ namespace Projekt.Models
         [Required]
         [Column(TypeName = "decimal(9,2)")]
         public decimal Price { get; set; }
+        [Required]
+        [NotMapped]
+        [Display(Name = "Choose the product image")]
+        public IFormFile ProductImage { get; set; }
+        public string ProductImagePath { get; set; }
         [ForeignKey("ProductId")]
         public List<OrderItem> OrderItems { get; set; }
         [ForeignKey("ProductId")]
