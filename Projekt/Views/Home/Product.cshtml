@@ -5,7 +5,7 @@
 
 <h3>Product list</h3>
 
-<div class="row mb-5">
+<div class="row mb-2">
     <div class="col-md-2">
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,42 +24,24 @@
     </div>
 </div>
 
-<div class="row mt-3">
+<div class="row mt-3 justify-content-between">
     @foreach (var item in Model)
     {
-        <div class="col-sm-4 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <img src="@item.ProductImagePath" class="img-thumbnail" />
-                    <h5 class="card-title mt-3">@item.Title</h5>
-                    <p class="card-text">@item.Description</p>
-
-                    <table class="table table-condensed table-hover">
-                        <thead>
-                            <tr>
-                                <th>Price</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@item.Price Kn</td>
-                                <td>
-                                    <form method="post" asp-controller="Cart" asp-action="AddToCart">
-                                        <input type="hidden" name="productId" value="@item.Id" />
-                                        <input type="hidden" name="quantity" value="1" />
-                                        <input type="submit" class="btn btn-success btn-sm" value="Add to cart" />
-                                    </form>
-
-                                </td>
-                                <td>
-                                    <a asp-route-id="@item.Id" asp-controller="Home" asp-action="ProductDetail" class="btn btn-primary btn-sm">Details</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <form method="post" asp-controller="Cart" asp-action="AddToCart">
+            <input type="hidden" name="productId" value="@item.Id" />
+            <input type="hidden" name="quantity" value="1" />
+            <div class="col-sm-4 mt-5">
+                <div class="card" style="width: 18rem;">
+                    <img src="@item.ProductImagePath" class="card-img-top" alt="product image" style="width:auto; height: 272px">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text" style="height: 50px">@item.Description</p>
+                        <p class="card-text"><strong>Price: </strong> @item.Price kn</p>
+                        <a asp-route-id="@item.Id" asp-controller="Home" asp-action="ProductDetail" class="btn btn-primary btn-sm btn-block">Details</a>
+                        <button type="submit" class="btn btn-success btn-sm btn-block">Add to cart</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     }
 </div>

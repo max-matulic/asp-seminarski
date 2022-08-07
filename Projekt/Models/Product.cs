@@ -22,7 +22,7 @@ namespace Projekt.Models
         public decimal Price { get; set; }
         [Required]
         [NotMapped]
-        [Display(Name = "Choose the product image")]
+        [Display(Name = "Product image")]
         public IFormFile ProductImage { get; set; }
         public string ProductImagePath { get; set; }
         [ForeignKey("ProductId")]

@@ -41,8 +41,14 @@
     <div class="form-group row">
         <label asp-for="Avatar" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <input asp-for="Avatar" class="form-control" accept="image/*">
+            @*<input asp-for="Avatar" class="form-control" accept="image/*">*@
+            <div class="custom-file">
+                <input asp-for="Avatar" class="custom-file-input" id="customFile" accept="image/*">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
             <span asp-validation-for="Avatar" class="text-danger"></span>
+
+
         </div>
     </div>
 

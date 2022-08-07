@@ -53,7 +53,8 @@ namespace Projekt.Controllers
                             Title = product.Title,
                             Description = product.Description,
                             Quantity = product.Quantity,
-                            Price = product.Price
+                            Price = product.Price,
+                            ProductImagePath = product.ProductImagePath
                         }
                     ).ToList();
             }
