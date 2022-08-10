@@ -51,30 +51,5 @@ namespace Projekt.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from server");
             }
         }
-
-        [HttpPut("{id}")]
-        public ActionResult PutProduct(int id, Product product)
-        {
-            try
-            {
-                if(id != product.Id)
-                {
-                    return BadRequest("Product ids don't match!");
-                }
-
-                var productForUpdating = _proizvodiRepository.GetProductById(id);
-                if(productForUpdating == null)
-                {
-                    return NotFound($"Product with id = {id} not found!");
-                }
-
-                var updateProduct = _proizvodiRepository.UpdateProduct(product);
-                return Ok(updateProduct);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data from server");
-            }
-        }
     }
 }

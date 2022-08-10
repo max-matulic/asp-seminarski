@@ -16,6 +16,7 @@ namespace Projekt.Models
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password")]
+        [Display(Name = "Repeated password")]
         public string RepeatedPassword { get; set; }
         public IFormFile Avatar { get; set; }
 

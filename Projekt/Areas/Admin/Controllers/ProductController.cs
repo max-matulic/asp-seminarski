@@ -76,26 +76,28 @@ namespace Projekt.Areas.Admin.Controllers
             return View(product);
         }
 
-        //public IActionResult Edit(int id)
-        //{
-        //    var product = _dbContext.Product.Find(id);
+        public IActionResult Edit(int id)
+        {
+            var product = _dbContext.Product.Find(id);
 
-        //    return View(product);
-        //}
+            return View(product);
+        }
 
-        //[HttpPost]
-        //public IActionResult Edit(int id, Product product)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _dbContext.Update(product);
-        //        _dbContext.SaveChanges();
+        [HttpPost]
+        public IActionResult Edit(int id, Product product)
+        {
+            Product dbProduct = _dbContext.Product.Find(id);
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
+            dbProduct.Title = product.Title;
+            dbProduct.Price = product.Price;
+            dbProduct.Quantity = product.Quantity;
+            dbProduct.Description = product.Description;
 
-        //    return View(product);
-        //}
+            _dbContext.Update(dbProduct);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult Delete(int id)
         {

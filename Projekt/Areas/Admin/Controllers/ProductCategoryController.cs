@@ -106,8 +106,6 @@ namespace Projekt.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index), new { productId = prodCat.ProductId });
         }
 
-
-
         private List<SelectListItem> GetCategories()
         {
             return _dbContext.Category.Select(c => new SelectListItem()

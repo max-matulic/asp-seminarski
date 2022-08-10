@@ -14,7 +14,6 @@ namespace Projekt.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
 
-        #region Order
         public OrderController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -154,47 +153,6 @@ namespace Projekt.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        #endregion
-
-        #region Order Items
-
-        public IActionResult AddOrderItem(int id)
-        {
-            ViewBag.OrderId = id;
-            ViewBag.Products = _dbContext.Product.Select(p => new SelectListItem()
-            {
-                Value = p.Id.ToString(),
-                Text = p.Title
-            }).ToList();
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AddOrderItem([Bind("OrderId, ProductId, Total, Quantity")] OrderItem orderItem)
-        {
-            if (ModelState.IsValid)
-            {
-                _dbContext.OrderItem.Add(orderItem);
-                _dbContext.SaveChanges();
-
-                return RedirectToAction("Details", new { id = orderItem.OrderId });
-            }
-
-            return View(orderItem);
-        }
-
-        public IActionResult DeleteOrderItem(int id)
-        {
-            var orderItem = _dbContext.OrderItem.Find(id);
-            _dbContext.OrderItem.Remove(orderItem);
-            _dbContext.SaveChanges();
-
-            return RedirectToAction("Details", new { id = orderItem.OrderId });
-        }
-
-        #endregion
 
         private List<SelectListItem> GetUsers()
         {
