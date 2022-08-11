@@ -16,7 +16,7 @@
 
 ---
 
-## 📱 Technologies
+## 📱 Tehnologije
 
 - C#
 - ASP.NET Core
@@ -26,7 +26,7 @@
 
 ---
 
-## 💻 Installation
+## 💻 Instalacija
 
 - preuzeti projekt na svoje računalo 
 - unzipati ga i otvoriti sa IDE-om koji koristite, npr. Visual Studio 2022
@@ -34,12 +34,12 @@
 - napisati u konzolu: `update-database`
 - kliknuti na gumb Start (IIS Express)
 
-## Documentation
+## Dokumentacija
 
 [Official ASP.NET documentation](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0)
 
 
-## Authors
+## Autori
 
 - [@max-matulic](https://github.com/max-matulic)
 
