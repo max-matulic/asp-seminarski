@@ -100,7 +100,7 @@ namespace Projekt.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, string email, string password)
+        public async Task<IActionResult> Edit(string id, string email, string password, string username)
         {
             ApplicationUser applicationUser = await _userManager.FindByIdAsync(id);
             if (applicationUser != null)
@@ -114,6 +114,15 @@ namespace Projekt.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Email is empty!");
                 }
 
+                if (!string.IsNullOrEmpty(username))
+                {
+                    applicationUser.UserName = username;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username is empty!");
+                }
+
                 if (!string.IsNullOrEmpty(password))
                 {
                     applicationUser.PasswordHash = _passwordHasher.HashPassword(applicationUser, password);
@@ -123,7 +132,7 @@ namespace Projekt.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Password is empty!");
                 }
 
-                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(username))
                 {
                     IdentityResult result = await _userManager.UpdateAsync(applicationUser);
 

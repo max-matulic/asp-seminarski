@@ -9,6 +9,7 @@ namespace Projekt.Models
         public string Username { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
+        [Compare("Username")]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
