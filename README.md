@@ -34,6 +34,18 @@
 - napisati u konzolu: `update-database`
 - kliknuti na gumb Start (IIS Express)
 
+## Login podaci
+
+### Admin
+
+email: admin@admin.com \
+password: Password12345
+
+### Pero
+
+email: pero.peric123@test.com \
+password: Password12345
+
 ## Dokumentacija
 
 [Official ASP.NET documentation](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0)
